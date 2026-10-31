@@ -1,0 +1,156 @@
+[
+  {
+    "name": "engine.catalog.list",
+    "description": "Discover modules and their declared capabilities. Returns a catalog revision for subsequent calls.",
+    "sideEffects": "none",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expectedRevision": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "query": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "capability": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*:[A-Za-z0-9_.-]+$"
+        }
+      }
+    },
+    "outputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision",
+        "modules"
+      ],
+      "properties": {
+        "revision": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "manifest",
+              "description",
+              "tags",
+              "permissions"
+            ],
+            "properties": {
+              "manifest": {
+                "type": "object"
+              },
+              "description": {
+                "type": "string"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "permissions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "engine.catalog.describe",
+    "description": "Read the full metadata and JSON Schema contracts for one module at the current catalog revision.",
+    "sideEffects": "none",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "moduleId"
+      ],
+      "properties": {
+        "expectedRevision": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "moduleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        }
+      }
+    },
+    "outputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision",
+        "module"
+      ],
+      "properties": {
+        "revision": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "module": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "engine.module.invoke",
+    "description": "Invoke one trusted module handler. Requires the current catalog revision and all permissions configured by the host.",
+    "sideEffects": "module-defined",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "moduleId",
+        "revision",
+        "input"
+      ],
+      "properties": {
+        "moduleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "input": {}
+      }
+    },
+    "outputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision",
+        "moduleId",
+        "output"
+      ],
+      "properties": {
+        "revision": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "moduleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "output": {}
+      }
+    }
+  }
+]

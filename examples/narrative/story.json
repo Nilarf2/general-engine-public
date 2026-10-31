@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1",
+  "id": "signal-demo",
+  "version": "1.0.0",
+  "title": "Signal at Dawn",
+  "locale": "en",
+  "variables": {
+    "trust": { "type": "number", "default": 0 }
+  },
+  "start": "opening",
+  "nodes": [
+    {
+      "id": "opening",
+      "type": "dialogue",
+      "lines": [
+        { "speaker": "Control", "text": "A weak signal repeats from the old relay station." }
+      ],
+      "next": "decision"
+    },
+    {
+      "id": "decision",
+      "type": "choice",
+      "prompt": "How should the team respond?",
+      "options": [
+        {
+          "id": "answer",
+          "text": "Reply with the station code",
+          "next": "reply",
+          "actions": [
+            { "type": "add", "variable": "trust", "value": 1 },
+            { "type": "tag.add", "tag": "answered" }
+          ]
+        },
+        {
+          "id": "wait",
+          "text": "Wait for another transmission",
+          "next": "waited",
+          "actions": [
+            { "type": "tag.add", "tag": "waited" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reply",
+      "type": "narration",
+      "lines": [
+        { "text": "A clear acknowledgement returns before sunrise." }
+      ],
+      "next": "answered-ending"
+    },
+    {
+      "id": "waited",
+      "type": "narration",
+      "lines": [
+        { "text": "The signal fades, then repeats from a second location." }
+      ],
+      "next": "waited-ending"
+    },
+    { "id": "answered-ending", "type": "end", "ending": "answered" },
+    { "id": "waited-ending", "type": "end", "ending": "waited" }
+  ]
+}

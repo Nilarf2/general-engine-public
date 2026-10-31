@@ -1,0 +1,13 @@
+{
+  "storyId": "signal-demo",
+  "contentVersion": "1.0.0",
+  "seed": 42,
+  "steps": [
+    { "node": "opening", "command": { "type": "continue" } },
+    { "node": "decision", "command": { "type": "choose", "optionId": "answer" } },
+    { "node": "reply", "command": { "type": "continue" } }
+  ],
+  "ending": "answered",
+  "variables": { "trust": 1 },
+  "tags": ["answered"]
+}

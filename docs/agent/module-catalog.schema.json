@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://general-engine.invalid/docs/agent/module-catalog.schema.json",
+  "title": "General Engine Agent module catalog",
+  "description": "A host-owned discovery document. It describes trusted handlers; it does not load code.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "apiVersion",
+    "revision",
+    "modules"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": 1
+    },
+    "revision": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/module"
+      },
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "module": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest",
+        "description",
+        "tags",
+        "permissions",
+        "inputSchema",
+        "outputSchema"
+      ],
+      "properties": {
+        "manifest": {
+          "$ref": "#/$defs/manifest"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "uniqueItems": true
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*(?::[A-Za-z0-9][A-Za-z0-9._/-]*)?$"
+          },
+          "uniqueItems": true
+        },
+        "inputSchema": {
+          "$ref": "#/$defs/schema"
+        },
+        "outputSchema": {
+          "$ref": "#/$defs/schema"
+        }
+      }
+    },
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "apiVersion",
+        "requires",
+        "provides"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "apiVersion": {
+          "const": 1
+        },
+        "requires": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "provides": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*:[A-Za-z0-9_.-]+$"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "schema": {
+      "type": "object",
+      "description": "JSON Schema subset accepted by the offline gateway; external references are not permitted.",
+      "additionalProperties": true
+    }
+  }
+}

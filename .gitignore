@@ -1,0 +1,16 @@
+node_modules/
+dist/
+lib/
+tests/artifacts/
+deliverables/
+*.log
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.npmrc
+.DS_Store
+Thumbs.db

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://general-engine.invalid/docs/agent/tool-contracts.schema.json",
+  "title": "Agent tool-contract list",
+  "type": "array",
+  "minItems": 3,
+  "maxItems": 3,
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "name",
+      "description",
+      "sideEffects",
+      "inputSchema",
+      "outputSchema"
+    ],
+    "properties": {
+      "name": {
+        "type": "string",
+        "enum": [
+          "engine.catalog.list",
+          "engine.catalog.describe",
+          "engine.module.invoke"
+        ]
+      },
+      "description": {
+        "type": "string",
+        "minLength": 1
+      },
+      "sideEffects": {
+        "type": "string",
+        "enum": [
+          "none",
+          "module-defined"
+        ]
+      },
+      "inputSchema": {
+        "type": "object"
+      },
+      "outputSchema": {
+        "type": "object"
+      }
+    }
+  }
+}

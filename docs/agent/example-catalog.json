@@ -1,0 +1,50 @@
+{
+  "apiVersion": 1,
+  "revision": "9e605376eaddecb11e35f70680f4a991c1540fe9c0e59711885bcbf98eabff0b",
+  "modules": [
+    {
+      "manifest": {
+        "id": "scene",
+        "version": "1.0.0",
+        "apiVersion": 1,
+        "requires": {},
+        "provides": [
+          "scene:inspect"
+        ]
+      },
+      "description": "Read a validated scene summary from a caller-owned JSON value.",
+      "tags": [
+        "content",
+        "read"
+      ],
+      "permissions": [
+        "scene:read"
+      ],
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "scene"
+        ],
+        "properties": {
+          "scene": {
+            "type": "object"
+          }
+        }
+      },
+      "outputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "entityCount"
+        ],
+        "properties": {
+          "entityCount": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  ]
+}
